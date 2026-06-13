@@ -1,0 +1,6 @@
+#all libraries needed are named here 
+
+pandas 
+numpy
+seaborn
+-e .
