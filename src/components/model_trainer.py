@@ -50,7 +50,65 @@ class ModelTrainer:
                 "AdaBoost Classifier": AdaBoostRegressor()
             }
 
-            model_report= dict= evaluate_models(X_train= X_train, y_train= y_train,X_test= X_test, y_test= y_test,  models= models)
+            params = {
+
+                "Random Forest": {
+                    "n_estimators": [100, 200, 300],
+                    "criterion": ["squared_error", "friedman_mse", "absolute_error"],
+                    "max_depth": [None, 10, 20, 30],
+                    "min_samples_split": [2, 5, 10],
+                    "min_samples_leaf": [1, 2, 4]
+                },
+
+                "Decision Tree": {
+                    "criterion": ["squared_error", "friedman_mse", "absolute_error"],
+                    "splitter": ["best", "random"],
+                    "max_depth": [None, 10, 20, 30],
+                    "min_samples_split": [2, 5, 10],
+                    "min_samples_leaf": [1, 2, 4]
+                },
+
+                "Gradient Boosting": {
+                    "loss": ["squared_error", "absolute_error", "huber"],
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "n_estimators": [100, 200],
+                    "subsample": [0.8, 1.0],
+                    "max_depth": [3, 5]
+                },
+
+                "Linear Regression": {
+                    "fit_intercept": [True, False]
+                },
+
+                "K-Neighbors Classifier": {
+                    "n_neighbors": [3, 5, 7, 9],
+                    "weights": ["uniform", "distance"],
+                    "algorithm": ["auto", "ball_tree", "kd_tree", "brute"],
+                    "p": [1, 2]
+                },
+
+                "XGB Classifier": {
+                    "n_estimators": [100, 200],
+                    "learning_rate": [0.01, 0.1, 0.2],
+                    "max_depth": [3, 5, 7],
+                    "subsample": [0.8, 1.0],
+                    "colsample_bytree": [0.8, 1.0]
+                },
+
+                "CatBoosting": {
+                    "iterations": [100, 200],
+                    "learning_rate": [0.01, 0.05, 0.1],
+                    "depth": [4, 6, 8],
+                    "l2_leaf_reg": [1, 3, 5]
+                },
+
+                "AdaBoost Classifier": {
+                    "n_estimators": [50, 100, 200],
+                    "learning_rate": [0.01, 0.1, 1.0],
+                    "loss": ["linear", "square", "exponential"]
+                }
+            }
+            model_report= dict= evaluate_models(X_train= X_train, y_train= y_train,X_test= X_test, y_test= y_test,  models= models, param= params)
 
             best_model_score= max(sorted(model_report.values()))
 
